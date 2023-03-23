@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/JoinStoriesSDK-Swift.h</key>
 		<data>
-		6o/icy57TGFD8/+dKs6t4PiYGE0=
+		AGanjgb9vtuaFbVgdEiLNRtssb8=
 		</data>
 		<key>Headers/JoinStoriesSDK.h</key>
 		<data>
@@ -14,35 +14,31 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Ey1nQ9jv2hFpKekDZaZLsA3V0ag=
+		MUhZzud0+ZpI2Z49nxiuixffQos=
+		</data>
+		<key>Modules/JoinStoriesSDK.swiftmodule/arm64-apple-ios.abi.json</key>
+		<data>
+		ejp/UdY9TWBsAjuBRh9D8U37Xio=
+		</data>
+		<key>Modules/JoinStoriesSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
+		<data>
+		/a6ilv/mHzL8umqg8NaAcKHuJnU=
 		</data>
 		<key>Modules/JoinStoriesSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		0cSyb5rtsoaEe3FOnIVNla17UMk=
+		xzLuAu2jiLW1/3Xc5O/mvcUlqY0=
 		</data>
 		<key>Modules/JoinStoriesSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		e7PcRuf6ZrZZdb2uTDJ92EwSRqE=
+		/a6ilv/mHzL8umqg8NaAcKHuJnU=
 		</data>
 		<key>Modules/JoinStoriesSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		t9oCUxRMhR8W3x5Z0lPUke/3c3E=
-		</data>
-		<key>Modules/JoinStoriesSDK.swiftmodule/arm64.swiftdoc</key>
-		<data>
-		0cSyb5rtsoaEe3FOnIVNla17UMk=
-		</data>
-		<key>Modules/JoinStoriesSDK.swiftmodule/arm64.swiftinterface</key>
-		<data>
-		e7PcRuf6ZrZZdb2uTDJ92EwSRqE=
-		</data>
-		<key>Modules/JoinStoriesSDK.swiftmodule/arm64.swiftmodule</key>
-		<data>
-		t9oCUxRMhR8W3x5Z0lPUke/3c3E=
+		GtwXAassYT9PvGtBImhF7EOK3fo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		NPxPkWjepivZ3wFeQE1JnWOIyyU=
+		6qUtrvx7ekyXqikXW3MbdOs5adk=
 		</data>
 		<key>placeholder.jpg</key>
 		<data>
@@ -55,7 +51,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2bVwD6EYsY9oU+yC7LOCx65UOF7GStLhVpiZTYyu2MI=
+			hiLmK+gADHE04y0WFN/2+oQ8mjjnEE0uKLJdVtPAjy8=
 			</data>
 		</dict>
 		<key>Headers/JoinStoriesSDK.h</key>
@@ -65,53 +61,46 @@
 			WLqamhBzrelS4TFShMm1jnXebElA26xcUK4ddF7mjSM=
 			</data>
 		</dict>
+		<key>Modules/JoinStoriesSDK.swiftmodule/arm64-apple-ios.abi.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			XEWTFugwV/kj4Ry0Ki30gcd7dyDNe5nIBv2yPJhjx6s=
+			</data>
+		</dict>
+		<key>Modules/JoinStoriesSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			2eQvqzAeWEj6lnr1T2OkxUb8XnbbnaTdBVTdxsaz8CM=
+			</data>
+		</dict>
 		<key>Modules/JoinStoriesSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HzITP5idXNY0cgf4o6RlT3FSmkjfji0LgWXsm1UcQrs=
+			lflmgDSWM2qCo+ZNGWDTJmPD99dJLew6h0mt0Jfd8Tc=
 			</data>
 		</dict>
 		<key>Modules/JoinStoriesSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			NFfFAnSTwhm6shebY4ETVAdXorS10XDONuZ5/7irwzg=
+			2eQvqzAeWEj6lnr1T2OkxUb8XnbbnaTdBVTdxsaz8CM=
 			</data>
 		</dict>
 		<key>Modules/JoinStoriesSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JosLKmRMFHrK+ZW8w/ERDobkYG1FuPWjTapP2k89fSw=
-			</data>
-		</dict>
-		<key>Modules/JoinStoriesSDK.swiftmodule/arm64.swiftdoc</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			HzITP5idXNY0cgf4o6RlT3FSmkjfji0LgWXsm1UcQrs=
-			</data>
-		</dict>
-		<key>Modules/JoinStoriesSDK.swiftmodule/arm64.swiftinterface</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			NFfFAnSTwhm6shebY4ETVAdXorS10XDONuZ5/7irwzg=
-			</data>
-		</dict>
-		<key>Modules/JoinStoriesSDK.swiftmodule/arm64.swiftmodule</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			JosLKmRMFHrK+ZW8w/ERDobkYG1FuPWjTapP2k89fSw=
+			RmAUPnwlzhWWrNV5DjTQa9z7puAk9JBRdfFLavM3CTo=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4uMOd4fu80lvLJ5Yx85NuHT4YfLjn5abgiz5KaEcyyU=
+			bIu4tbwvfGnuu5lpm3O4nhC4ZTQ4r3xZDs+9ChXz8Do=
 			</data>
 		</dict>
 		<key>placeholder.jpg</key>

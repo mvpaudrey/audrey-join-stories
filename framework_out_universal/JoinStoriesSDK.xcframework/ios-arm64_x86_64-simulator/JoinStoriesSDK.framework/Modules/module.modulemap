@@ -6,6 +6,6 @@ framework module JoinStoriesSDK {
 }
 
 module JoinStoriesSDK.Swift {
-    header "JoinStoriesSDK-Swift.h"
-    requires objc
+  header "JoinStoriesSDK-Swift.h"
+  requires objc
 }
