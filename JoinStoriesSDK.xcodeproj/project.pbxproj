@@ -153,13 +153,11 @@
 		278F39AB26F1080D008C027D /* JoinStoriesSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JoinStoriesSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		278F39AE26F1080D008C027D /* JoinStoriesSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoinStoriesSDK.h; sourceTree = "<group>"; };
 		278F39AF26F1080D008C027D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		278F39B726F108A7008C027D /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		278F39B826F108A7008C027D /* placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = placeholder.jpg; sourceTree = "<group>"; };
 		278F39BB26F108A7008C027D /* StoryPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryPlayer.swift; sourceTree = "<group>"; };
 		278F39BC26F108A7008C027D /* StoryThumbView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryThumbView.swift; sourceTree = "<group>"; };
 		278F39BD26F108A7008C027D /* StoryPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryPlayerViewController.swift; sourceTree = "<group>"; };
 		278F39BE26F108A7008C027D /* StoryViewConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryViewConfig.swift; sourceTree = "<group>"; };
-		278F39C026F108A7008C027D /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		278F39C226F108A7008C027D /* UIImageView+Border.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Border.swift"; sourceTree = "<group>"; };
 		278F39C326F108A7008C027D /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		278F39C426F108A7008C027D /* UIViewController+Story.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Story.swift"; sourceTree = "<group>"; };
@@ -276,7 +274,6 @@
 		278F39B626F108A7008C027D /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				278F39B726F108A7008C027D /* .gitkeep */,
 				278F39B826F108A7008C027D /* placeholder.jpg */,
 			);
 			path = Assets;
@@ -290,7 +287,6 @@
 				76D0938827C29E5A00E8F481 /* Common */,
 				76DC9C2F28E0A39C00B44381 /* ImageCaching */,
 				278F39BA26F108A7008C027D /* UI */,
-				278F39C026F108A7008C027D /* .gitkeep */,
 				278F39C126F108A7008C027D /* Extensions */,
 				278F39C926F108A7008C027D /* Stories */,
 				76DC9C3828E0C09A00B44381 /* Networking */,
