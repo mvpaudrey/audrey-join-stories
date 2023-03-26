@@ -35,11 +35,13 @@
               }
             ],
             "declKind": "Constructor",
-            "usr": "s:14JoinStoriesSDK0A13ConfigurationC4teamACSS_tcfc",
+            "usr": "c:@M@JoinStoriesSDK@objc(cs)JoinConfiguration(im)initWithTeam:",
             "mangledName": "$s14JoinStoriesSDK0A13ConfigurationC4teamACSS_tcfc",
             "moduleName": "JoinStoriesSDK",
+            "objc_name": "initWithTeam:",
             "declAttributes": [
-              "AccessControl"
+              "AccessControl",
+              "ObjC"
             ],
             "init_kind": "Designated"
           },

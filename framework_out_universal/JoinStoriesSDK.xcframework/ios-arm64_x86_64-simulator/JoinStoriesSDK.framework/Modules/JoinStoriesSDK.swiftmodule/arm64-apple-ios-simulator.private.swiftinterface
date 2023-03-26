@@ -13,7 +13,7 @@ import WebKit
 import _Concurrency
 import _StringProcessing
 @objc final public class JoinConfiguration : ObjectiveC.NSObject {
-  public init(team: Swift.String)
+  @objc public init(team: Swift.String)
   @objc deinit
 }
 @objc public enum StoriesAPIError : Swift.Int, Swift.Error {

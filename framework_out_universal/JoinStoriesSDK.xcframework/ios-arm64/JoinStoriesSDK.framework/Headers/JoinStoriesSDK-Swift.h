@@ -256,9 +256,11 @@ using UInt = size_t;
 
 #if defined(__OBJC__)
 
+@class NSString;
 
 SWIFT_CLASS("_TtC14JoinStoriesSDK17JoinConfiguration")
 @interface JoinConfiguration : NSObject
+- (nonnull instancetype)initWithTeam:(NSString * _Nonnull)team OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -275,7 +277,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) JoinStories 
 - (void)stopPlayer;
 @end
 
-@class NSString;
 @class UIColor;
 enum PlayerVerticalAnchor : NSInteger;
 
