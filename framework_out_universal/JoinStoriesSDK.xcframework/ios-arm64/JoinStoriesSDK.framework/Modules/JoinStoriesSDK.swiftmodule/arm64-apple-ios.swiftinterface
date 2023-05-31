@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-compiler-version: Apple Swift version 5.8 (swiftlang-5.8.0.124.2 clang-1403.0.22.11.100)
 // swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name JoinStoriesSDK
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import Foundation
@@ -22,6 +22,7 @@ import _StringProcessing
   case noData
   case fetchingStoriesTimedOut
   case fetchingStoriesFailed
+  case fetchingStoriesEmpty
   public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int
   public static var _nsErrorDomain: Swift.String {
@@ -69,6 +70,9 @@ public protocol EndPointType {
   public var playerBackgroundColor: UIKit.UIColor
   public var playerStandaloneAnimationOrigin: JoinStoriesSDK.PlayerStandaloneAnimationOrigin
   public var playerVerticalAnchor: JoinStoriesSDK.PlayerVerticalAnchor
+  final public let playerShowShareButton: Swift.Bool
+  final public let playerHorizontalMargins: Swift.Int
+  final public let playerCornerRadius: Swift.Int
   @objc deinit
 }
 @objc public class JoinStoriesStandaloneConfig : ObjectiveC.NSObject, JoinStoriesSDK.JoinStoriesConfig {
@@ -76,7 +80,14 @@ public protocol EndPointType {
   @objc public var requestTimeoutInterval: Foundation.TimeInterval
   @objc public var playerBackgroundColor: UIKit.UIColor
   @objc public var playerVerticalAnchor: JoinStoriesSDK.PlayerVerticalAnchor
-  @objc public init(alias: Swift.String, requestTimeoutInterval: Foundation.TimeInterval = JoinStoriesStandaloneDefaultConfig.shared.requestTimeoutInterval, playerBackgroundColor: UIKit.UIColor = JoinStoriesStandaloneDefaultConfig.shared.playerBackgroundColor, playerStandaloneAnimationOrigin: JoinStoriesSDK.PlayerStandaloneAnimationOrigin = JoinStoriesStandaloneDefaultConfig.shared.playerStandaloneAnimationOrigin, playerVerticalAnchor: JoinStoriesSDK.PlayerVerticalAnchor = JoinStoriesStandaloneDefaultConfig.shared.playerVerticalAnchor)
+  @objc public var playerShowShareButton: Swift.Bool
+  @objc public var playerHorizontalMargins: Swift.Int
+  @objc public var playerCornerRadius: Swift.Int
+  @objc public var playerProgressBarDefaultColor: Swift.String?
+  @objc public var playerProgressBarFillColor: Swift.String?
+  @objc public var playerProgressBarThickness: Swift.Int
+  @objc public var playerProgressBarRadius: Swift.Int
+  @objc public init(alias: Swift.String, requestTimeoutInterval: Foundation.TimeInterval = JoinStoriesStandaloneDefaultConfig.shared.requestTimeoutInterval, playerBackgroundColor: UIKit.UIColor = JoinStoriesStandaloneDefaultConfig.shared.playerBackgroundColor, playerStandaloneAnimationOrigin: JoinStoriesSDK.PlayerStandaloneAnimationOrigin = JoinStoriesStandaloneDefaultConfig.shared.playerStandaloneAnimationOrigin, playerVerticalAnchor: JoinStoriesSDK.PlayerVerticalAnchor = JoinStoriesStandaloneDefaultConfig.shared.playerVerticalAnchor, playerShowShareButton: Swift.Bool = JoinStoriesStandaloneDefaultConfig.shared.playerShowShareButton, playerHorizontalMargins: Swift.Int = JoinStoriesStandaloneDefaultConfig.shared.playerHorizontalMargins, playerCornerRadius: Swift.Int = JoinStoriesStandaloneDefaultConfig.shared.playerCornerRadius, playerProgressBarDefaultColor: Swift.String? = nil, playerProgressBarFillColor: Swift.String? = nil, playerProgressBarThickness: Swift.Int = 0, playerProgressBarRadius: Swift.Int = 0)
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class StorySlideDownTransition : ObjectiveC.NSObject, JoinStoriesSDK.StoryAnimatable {
@@ -88,36 +99,24 @@ public protocol EndPointType {
   @objc deinit
 }
 extension JoinStoriesSDK.StorySlideDownTransition : UIKit.UIViewControllerAnimatedTransitioning {
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func transitionDuration(using transitionContext: UIKit.UIViewControllerContextTransitioning?) -> Foundation.TimeInterval
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func animateTransition(using transitionContext: UIKit.UIViewControllerContextTransitioning)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func transitionDuration(using transitionContext: (any UIKit.UIViewControllerContextTransitioning)?) -> Foundation.TimeInterval
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func animateTransition(using transitionContext: any UIKit.UIViewControllerContextTransitioning)
 }
 public typealias StoriesCompletionHandler = (Swift.Result<Swift.Void, JoinStoriesSDK.StoriesAPIError>) -> Swift.Void
 public typealias RNStoriesCompletionHandler = (Swift.Bool, JoinStoriesSDK.StoriesAPIError?) -> Swift.Void
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc final public class JoinStories : ObjectiveC.NSObject {
   @objc public static let shared: JoinStoriesSDK.JoinStories
-  @available(*, deprecated, message: "This will be removed. Please use `setConfiguration(_ configuration:)` instead")
-  public static func setConfiguration(_ configuration: JoinStoriesSDK.JoinConfiguration, viewConfig: JoinStoriesSDK.StoryViewConfig? = nil)
   @objc public static func setConfiguration(_ configuration: JoinStoriesSDK.JoinConfiguration)
-  @available(*, deprecated, message: "This will be removed. Please use `startThumbView(config:completion:)` instead")
-  public static func startThumbView(alias: Swift.String, completion: @escaping JoinStoriesSDK.StoriesCallback)
   public static func startThumbView(config: JoinStoriesSDK.JoinStoriesThumbConfig, completion: @escaping JoinStoriesSDK.StoriesCallback)
   dynamic public static func startThumbView(config: JoinStoriesSDK.JoinStoriesThumbConfig, completion: @escaping JoinStoriesSDK.RNStoriesCallback)
-  @available(*, deprecated, message: "This will be removed. Please use `startPlayer(config:fromController:completion:onDismiss)` instead")
-  public static func startPlayer(alias: Swift.String, fromController controller: UIKit.UIViewController, completion: @escaping JoinStoriesSDK.StoriesCompletionHandler, onDismiss: (() -> Swift.Void)? = nil)
-  public static func startPlayer(config: JoinStoriesSDK.JoinStoriesStandaloneConfig, fromController controller: UIKit.UIViewController, completion: @escaping JoinStoriesSDK.StoriesCompletionHandler, onDismiss: (() -> Swift.Void)? = nil)
+  public static func startPlayer(config: JoinStoriesSDK.JoinStoriesStandaloneConfig, completion: @escaping JoinStoriesSDK.StoriesCompletionHandler, onDismiss: (() -> Swift.Void)? = nil)
   dynamic public static func startPlayer(config: JoinStoriesSDK.JoinStoriesStandaloneConfig, fromController controller: UIKit.UIViewController, completion: @escaping JoinStoriesSDK.RNStoriesCompletionHandler, onDismiss: (() -> Swift.Void)? = nil)
   @objc dynamic public static func stopPlayer()
-  @available(*, deprecated, message: "This will be removed. Please use `fetchStories(config:completion:)` instead")
-  final public func fetchStories(alias: Swift.String, completion: @escaping JoinStoriesSDK.StoriesCallback)
-  final public func fetchStories(config: JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.StoriesCallback)
-  dynamic final public func fetchStories(config: JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.RNStoriesCallback)
-  @available(*, deprecated, message: "This will be removed. Please use `fetchStories(config:completion:)` instead")
-  final public func startPlayer(alias: Swift.String, fromController controller: UIKit.UIViewController, completion: @escaping JoinStoriesSDK.StoriesCompletionHandler, onDismiss: (() -> Swift.Void)? = nil)
-  final public func startPlayer(config: JoinStoriesSDK.JoinStoriesStandaloneConfig, fromController controller: UIKit.UIViewController, completion: @escaping JoinStoriesSDK.StoriesCompletionHandler, onDismiss: (() -> Swift.Void)? = nil)
-  dynamic final public func startPlayer(config: JoinStoriesSDK.JoinStoriesStandaloneConfig, fromController controller: UIKit.UIViewController, completion: @escaping JoinStoriesSDK.RNStoriesCompletionHandler, onDismiss: (() -> Swift.Void)? = nil)
+  final public func fetchStories(config: any JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.StoriesCallback)
+  dynamic final public func fetchStories(config: any JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.RNStoriesCallback)
+  final public func startPlayer(config: JoinStoriesSDK.JoinStoriesStandaloneConfig, completion: @escaping JoinStoriesSDK.StoriesCompletionHandler, onDismiss: (() -> Swift.Void)? = nil)
+  dynamic final public func startPlayer(config: JoinStoriesSDK.JoinStoriesStandaloneConfig, completion: @escaping JoinStoriesSDK.RNStoriesCompletionHandler, onDismiss: (() -> Swift.Void)? = nil)
   @objc dynamic final public func stopPlayer()
-  @available(*, deprecated, message: "This will be removed. Please use `getThumbViewConfig` instead")
-  final public func getViewConfig() -> JoinStoriesSDK.StoryViewConfig?
   final public func getThumbViewConfig() -> JoinStoriesSDK.JoinStoriesThumbConfig?
   final public func thumbAndLabelDimensions(ratio: Swift.Double = 0.7) -> (thumbWidth: Swift.Int, labelWidth: Swift.Int)
   final public func containerDimension() -> Swift.Int
@@ -138,15 +137,15 @@ public typealias RNStoriesCallback = ([JoinStoriesSDK.StoryValue]?, JoinStoriesS
 public protocol StoriesApiSpec {
   @available(*, deprecated, message: "This will be removed. Please use `fetchStories(config:completion)` instead")
   func fetchStories(alias: Swift.String, completion: @escaping JoinStoriesSDK.StoriesCallback)
-  func fetchStories(config: JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.StoriesCallback)
-  func fetchStories(config: JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.RNStoriesCallback)
+  func fetchStories(config: any JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.StoriesCallback)
+  func fetchStories(config: any JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.RNStoriesCallback)
 }
 public class StoriesApi : JoinStoriesSDK.StoriesApiSpec {
   public init(baseUrl: Swift.String, timeoutInterval: Foundation.TimeInterval)
   @available(*, deprecated, message: "This will be removed. Please use `fetchStories(config:completion)` instead")
   public func fetchStories(alias: Swift.String, completion: @escaping JoinStoriesSDK.StoriesCallback)
-  public func fetchStories(config: JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.StoriesCallback)
-  public func fetchStories(config: JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.RNStoriesCallback)
+  public func fetchStories(config: any JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.StoriesCallback)
+  public func fetchStories(config: any JoinStoriesSDK.JoinStoriesConfig, completion: @escaping JoinStoriesSDK.RNStoriesCallback)
   @objc deinit
 }
 @_hasMissingDesignatedInitializers public class JSONParameterEncoder : JoinStoriesSDK.ParameterEncoder {
@@ -155,7 +154,7 @@ public class StoriesApi : JoinStoriesSDK.StoriesApiSpec {
 }
 @objc public class StoryValue : ObjectiveC.NSObject, Swift.Decodable {
   public var id: Swift.String
-  required public init(from decoder: Swift.Decoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
   public static func == (lhs: JoinStoriesSDK.StoryValue, rhs: JoinStoriesSDK.StoryValue) -> Swift.Bool
   @objc deinit
 }
@@ -163,7 +162,7 @@ public class StoriesApi : JoinStoriesSDK.StoriesApiSpec {
   @_Concurrency.MainActor(unsafe) public static let reuseIdentifier: Swift.String
   @_Concurrency.MainActor(unsafe) public var config: JoinStoriesSDK.StoryViewConfig
   @_Concurrency.MainActor(unsafe) public var thumbConfig: JoinStoriesSDK.JoinStoriesThumbConfig?
-  @_Concurrency.MainActor(unsafe) public var storyPersistence: JoinStoriesSDK.StoryPersistable
+  @_Concurrency.MainActor(unsafe) public var storyPersistence: any JoinStoriesSDK.StoryPersistable
   @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
   @available(*, deprecated, message: "This will be removed. Use `setupCell(storyValue:storyConfig:ratio:)` for api requests")
   @_Concurrency.MainActor(unsafe) public func setupCell(storyValue: JoinStoriesSDK.StoryValue, with storyConfig: JoinStoriesSDK.StoryViewConfig, ratio: Swift.Double)
@@ -186,6 +185,7 @@ public enum StoryPresentationMode {
 }
 @_inheritsConvenienceInitializers @objc @_Concurrency.MainActor(unsafe) open class StoryTransitionViewController : UIKit.UIViewController {
   @objc @_Concurrency.MainActor(unsafe) open var stories: [JoinStoriesSDK.StoryValue]
+  @_Concurrency.MainActor(unsafe) open var config: (any JoinStoriesSDK.JoinStoriesConfig)?
   @objc @_Concurrency.MainActor(unsafe) open var transition: JoinStoriesSDK.StoryCircularTransition
   @objc @_Concurrency.MainActor(unsafe) open var interactiveTransition: JoinStoriesSDK.StoryCircularInteractiveTransition
   @objc @_Concurrency.MainActor(unsafe) open var startingPoint: CoreFoundation.CGPoint
@@ -202,9 +202,9 @@ extension JoinStoriesSDK.StoryTransitionViewController : UIKit.UICollectionViewD
   @_Concurrency.MainActor(unsafe) @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, didSelectItemAt indexPath: Foundation.IndexPath)
 }
 extension JoinStoriesSDK.StoryTransitionViewController : UIKit.UIViewControllerTransitioningDelegate {
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func animationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController, source: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func animationController(forDismissed dismissed: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func interactionControllerForDismissal(using animator: UIKit.UIViewControllerAnimatedTransitioning) -> UIKit.UIViewControllerInteractiveTransitioning?
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func animationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController, source: UIKit.UIViewController) -> (any UIKit.UIViewControllerAnimatedTransitioning)?
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func animationController(forDismissed dismissed: UIKit.UIViewController) -> (any UIKit.UIViewControllerAnimatedTransitioning)?
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func interactionControllerForDismissal(using animator: any UIKit.UIViewControllerAnimatedTransitioning) -> (any UIKit.UIViewControllerInteractiveTransitioning)?
 }
 public enum StoryEndPoint {
   case getStories(team: Swift.String, alias: Swift.String)
@@ -246,6 +246,9 @@ public protocol StoryPersistable : AnyObject {
   @objc final public let storyViewedIndicatorAlpha: Swift.Float
   @objc final public let thumbViewOverlayColor: UIKit.UIColor
   @objc final public let playerBackgroundColor: UIKit.UIColor
+  @objc final public let playerShowShareButton: Swift.Bool
+  @objc final public let playerHorizontalMargins: Swift.Int
+  @objc final public let playerCornerRadius: Swift.Int
   @objc deinit
 }
 @objc public class JoinStoriesThumbConfig : ObjectiveC.NSObject, JoinStoriesSDK.JoinStoriesConfig {
@@ -253,7 +256,14 @@ public protocol StoryPersistable : AnyObject {
   @objc public var requestTimeoutInterval: Foundation.TimeInterval
   @objc public var playerBackgroundColor: UIKit.UIColor
   @objc public var playerVerticalAnchor: JoinStoriesSDK.PlayerVerticalAnchor
-  @objc public init(alias: Swift.String, requestTimeoutInterval: Foundation.TimeInterval = StoryViewConfigDefault.shared.requestTimeoutInterval, containerDimension: Swift.Int = StoryViewConfigDefault.shared.containerDimension, fontName: Swift.String = StoryViewConfigDefault.shared.fontName, labelColor: UIKit.UIColor = StoryViewConfigDefault.shared.labelColor, thumbViewSpacing: Swift.Int = StoryViewConfigDefault.shared.thumbViewSpacing, withLabel: Swift.Bool = StoryViewConfigDefault.shared.withLabel, loaderInnerViewColor: [UIKit.UIColor] = StoryViewConfigDefault.shared.loaderInnerViewColor, loaderColors: [UIKit.UIColor] = StoryViewConfigDefault.shared.loaderColors, loaderInnerViewWidth: Swift.Int = StoryViewConfigDefault.shared.loaderInnerViewWidth, loaderWidth: Swift.Int = StoryViewConfigDefault.shared.loaderWidth, storyViewedIndicatorColor: UIKit.UIColor = StoryViewConfigDefault.shared.storyViewedIndicatorColor, storyViewedIndicatorAlpha: Swift.Float = StoryViewConfigDefault.shared.storyViewedIndicatorAlpha, thumbViewOverlayColor: UIKit.UIColor = StoryViewConfigDefault.shared.thumbViewOverlayColor, playerBackgroundColor: UIKit.UIColor = StoryViewConfigDefault.shared.playerBackgroundColor, playerVerticalAnchor: JoinStoriesSDK.PlayerVerticalAnchor = .bottom)
+  @objc public var playerShowShareButton: Swift.Bool
+  @objc public var playerHorizontalMargins: Swift.Int
+  @objc public var playerCornerRadius: Swift.Int
+  @objc public var playerProgressBarDefaultColor: Swift.String?
+  @objc public var playerProgressBarFillColor: Swift.String?
+  @objc public var playerProgressBarThickness: Swift.Int
+  @objc public var playerProgressBarRadius: Swift.Int
+  @objc public init(alias: Swift.String, requestTimeoutInterval: Foundation.TimeInterval = StoryViewConfigDefault.shared.requestTimeoutInterval, containerDimension: Swift.Int = StoryViewConfigDefault.shared.containerDimension, fontName: Swift.String = StoryViewConfigDefault.shared.fontName, labelColor: UIKit.UIColor = StoryViewConfigDefault.shared.labelColor, thumbViewSpacing: Swift.Int = StoryViewConfigDefault.shared.thumbViewSpacing, withLabel: Swift.Bool = StoryViewConfigDefault.shared.withLabel, loaderInnerViewColor: [UIKit.UIColor] = StoryViewConfigDefault.shared.loaderInnerViewColor, loaderColors: [UIKit.UIColor] = StoryViewConfigDefault.shared.loaderColors, loaderInnerViewWidth: Swift.Int = StoryViewConfigDefault.shared.loaderInnerViewWidth, loaderWidth: Swift.Int = StoryViewConfigDefault.shared.loaderWidth, storyViewedIndicatorColor: UIKit.UIColor = StoryViewConfigDefault.shared.storyViewedIndicatorColor, storyViewedIndicatorAlpha: Swift.Float = StoryViewConfigDefault.shared.storyViewedIndicatorAlpha, thumbViewOverlayColor: UIKit.UIColor = StoryViewConfigDefault.shared.thumbViewOverlayColor, playerBackgroundColor: UIKit.UIColor = StoryViewConfigDefault.shared.playerBackgroundColor, playerVerticalAnchor: JoinStoriesSDK.PlayerVerticalAnchor = .bottom, playerShowShareButton: Swift.Bool = StoryViewConfigDefault.shared.playerShowShareButton, playerHorizontalMargins: Swift.Int = StoryViewConfigDefault.shared.playerHorizontalMargins, playerCornerRadius: Swift.Int = StoryViewConfigDefault.shared.playerCornerRadius, playerProgressBarDefaultColor: Swift.String? = nil, playerProgressBarFillColor: Swift.String? = nil, playerProgressBarThickness: Swift.Int = 0, playerProgressBarRadius: Swift.Int = 0)
   public func getThumbViewSpacing() -> Swift.Int
   @objc deinit
 }
@@ -290,7 +300,7 @@ extension UIKit.UIViewController {
 }
 extension UIKit.UIViewController {
   @_Concurrency.MainActor(unsafe) public func presentStorySheet(story: JoinStoriesSDK.StoryValue, animated: Swift.Bool)
-  @_Concurrency.MainActor(unsafe) public func presentStoryPlayer(stories: [JoinStoriesSDK.StoryValue], beginningAt indexPath: Foundation.IndexPath? = nil, animated: Swift.Bool, onDismiss: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func presentStoryPlayer(stories: [JoinStoriesSDK.StoryValue], config: any JoinStoriesSDK.JoinStoriesConfig, beginningAt indexPath: Foundation.IndexPath? = nil, animated: Swift.Bool, onDismiss: (() -> Swift.Void)? = nil)
 }
 public protocol StoryWebViewDelegate : WebKit.WKNavigationDelegate {
   func onPlayerDismiss()
@@ -302,7 +312,7 @@ public protocol StoryWebViewDelegate : WebKit.WKNavigationDelegate {
   @_Concurrency.MainActor(unsafe) @objc dynamic public init(frame: CoreFoundation.CGRect)
   @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect, configuration: WebKit.WKWebViewConfiguration)
   @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
-  @_Concurrency.MainActor(unsafe) public func addDelegate(_ delegate: JoinStoriesSDK.StoryWebViewDelegate?)
+  @_Concurrency.MainActor(unsafe) public func addDelegate(_ delegate: (any JoinStoriesSDK.StoryWebViewDelegate)?)
   @_Concurrency.MainActor(unsafe) @objc public func userContentController(_ userContentController: WebKit.WKUserContentController, didReceive message: WebKit.WKScriptMessage)
   @objc deinit
 }
@@ -433,16 +443,16 @@ public enum TransitionMode : Swift.Int {
   @objc deinit
 }
 extension JoinStoriesSDK.StoryCircularTransition : UIKit.UIViewControllerAnimatedTransitioning {
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func transitionDuration(using transitionContext: UIKit.UIViewControllerContextTransitioning?) -> Foundation.TimeInterval
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func animateTransition(using transitionContext: UIKit.UIViewControllerContextTransitioning)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func transitionDuration(using transitionContext: (any UIKit.UIViewControllerContextTransitioning)?) -> Foundation.TimeInterval
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func animateTransition(using transitionContext: any UIKit.UIViewControllerContextTransitioning)
 }
 public enum ImageLoaderError : Swift.Error {
   case noData
-  case common(error: Swift.Error)
+  case common(error: any Swift.Error)
 }
 final public class ImageLoader {
   public static let shared: JoinStoriesSDK.ImageLoader
-  public init(cache: JoinStoriesSDK.ImageCacheType = ImageCache())
+  public init(cache: any JoinStoriesSDK.ImageCacheType = ImageCache())
   final public func loadImage(from url: Foundation.URL, completion: @escaping (Swift.Result<UIKit.UIImage?, JoinStoriesSDK.ImageLoaderError>) -> Swift.Void)
   @objc deinit
 }
@@ -454,7 +464,7 @@ final public class ImageLoader {
     @objc get
     @objc set
   }
-  @_Concurrency.MainActor(unsafe) public var transition: JoinStoriesSDK.StoryAnimatable
+  @_Concurrency.MainActor(unsafe) public var transition: any JoinStoriesSDK.StoryAnimatable
   @_Concurrency.MainActor(unsafe) @objc dynamic public init()
   @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewDidLoad()
   @_Concurrency.MainActor(unsafe) @objc override dynamic public var prefersStatusBarHidden: Swift.Bool {
@@ -463,8 +473,8 @@ final public class ImageLoader {
   @_Concurrency.MainActor(unsafe) @objc public func webView(_ webView: WebKit.WKWebView, didFinish navigation: WebKit.WKNavigation!)
   @_Concurrency.MainActor(unsafe) @objc public func webView(_ webView: WebKit.WKWebView, decidePolicyFor navigationAction: WebKit.WKNavigationAction, decisionHandler: @escaping (WebKit.WKNavigationActionPolicy) -> Swift.Void)
   @_Concurrency.MainActor(unsafe) @objc public func webView(_ webView: WebKit.WKWebView, didStartProvisionalNavigation navigation: WebKit.WKNavigation!)
-  @_Concurrency.MainActor(unsafe) @objc public func webView(_ webView: WebKit.WKWebView, didFail navigation: WebKit.WKNavigation!, withError error: Swift.Error)
-  @_Concurrency.MainActor(unsafe) @objc public func webView(_ webView: WebKit.WKWebView, didFailProvisionalNavigation navigation: WebKit.WKNavigation!, withError error: Swift.Error)
+  @_Concurrency.MainActor(unsafe) @objc public func webView(_ webView: WebKit.WKWebView, didFail navigation: WebKit.WKNavigation!, withError error: any Swift.Error)
+  @_Concurrency.MainActor(unsafe) @objc public func webView(_ webView: WebKit.WKWebView, didFailProvisionalNavigation navigation: WebKit.WKNavigation!, withError error: any Swift.Error)
   @_Concurrency.MainActor(unsafe) @objc public func scrollViewDidScroll(_ scrollView: UIKit.UIScrollView)
   @objc @_Concurrency.MainActor(unsafe) public func onPlayerDismiss()
   @objc @_Concurrency.MainActor(unsafe) public func didReceiveNoPreviousPageListener(on story: JoinStoriesSDK.StoryValue)
@@ -484,8 +494,8 @@ extension JoinStoriesSDK.StoryPlayerViewController : UIKit.UICollectionViewDeleg
   @_Concurrency.MainActor(unsafe) @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Swift.Int) -> CoreFoundation.CGFloat
 }
 extension JoinStoriesSDK.StoryPlayerViewController : UIKit.UIViewControllerTransitioningDelegate {
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func animationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController, source: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func animationController(forDismissed dismissed: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func animationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController, source: UIKit.UIViewController) -> (any UIKit.UIViewControllerAnimatedTransitioning)?
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func animationController(forDismissed dismissed: UIKit.UIViewController) -> (any UIKit.UIViewControllerAnimatedTransitioning)?
 }
 extension UIKit.UIViewController {
   @_Concurrency.MainActor(unsafe) public func presentAlert(title: Swift.String, message: Swift.String)
@@ -502,7 +512,7 @@ public enum HTTPMethod : Swift.String {
     get
   }
 }
-public typealias NetworkRouterCompletion = (_ data: Foundation.Data?, _ response: Foundation.URLResponse?, _ error: Swift.Error?) -> ()
+public typealias NetworkRouterCompletion = (_ data: Foundation.Data?, _ response: Foundation.URLResponse?, _ error: (any Swift.Error)?) -> ()
 @_hasMissingDesignatedInitializers public class URLParameterEncoder : JoinStoriesSDK.ParameterEncoder {
   public func encode(urlRequest: inout Foundation.URLRequest, with parameters: JoinStoriesSDK.Parameters) throws
   @objc deinit
@@ -518,8 +528,8 @@ public typealias NetworkRouterCompletion = (_ data: Foundation.Data?, _ response
 extension JoinStoriesSDK.StorySlideUpTransition : UIKit.UIViewControllerTransitioningDelegate {
 }
 extension JoinStoriesSDK.StorySlideUpTransition : UIKit.UIViewControllerAnimatedTransitioning {
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func transitionDuration(using transitionContext: UIKit.UIViewControllerContextTransitioning?) -> Foundation.TimeInterval
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func animateTransition(using transitionContext: UIKit.UIViewControllerContextTransitioning)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func transitionDuration(using transitionContext: (any UIKit.UIViewControllerContextTransitioning)?) -> Foundation.TimeInterval
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func animateTransition(using transitionContext: any UIKit.UIViewControllerContextTransitioning)
 }
 extension UIKit.UIView {
   @_Concurrency.MainActor(unsafe) public func addTapGestureRecognizer(action: (() -> Swift.Void)?)
@@ -528,6 +538,7 @@ extension UIKit.UIView {
   case topIgnoringSafeArea
   case topWithSafeArea
   case bottom
+  case center
   public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
@@ -539,6 +550,13 @@ extension UIKit.UIView {
   @objc var requestTimeoutInterval: Foundation.TimeInterval { get set }
   @objc var playerBackgroundColor: UIKit.UIColor { get set }
   @objc var playerVerticalAnchor: JoinStoriesSDK.PlayerVerticalAnchor { get set }
+  @objc var playerShowShareButton: Swift.Bool { get set }
+  @objc var playerHorizontalMargins: Swift.Int { get set }
+  @objc var playerCornerRadius: Swift.Int { get set }
+  @objc var playerProgressBarDefaultColor: Swift.String? { get set }
+  @objc var playerProgressBarFillColor: Swift.String? { get set }
+  @objc var playerProgressBarThickness: Swift.Int { get set }
+  @objc var playerProgressBarRadius: Swift.Int { get set }
 }
 extension UIKit.UIApplication {
   @_Concurrency.MainActor(unsafe) public func topAreaInset() -> CoreFoundation.CGFloat
